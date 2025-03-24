@@ -1,0 +1,17 @@
+steps:
+  # Build the Docker image.
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+        'build',
+        '-t',
+        'gcr.io/qwiklabs-resources/python311-workbench:latest', 
+        '.'  # Build context is the current directory.
+    ]
+  # Push the Docker image to Artifact Registry.
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+        'push',
+        'gcr.io/qwiklabs-resources/python311-workbench:latest'
+    ]
+images:
+  - 'gcr.io/qwiklabs-resources/python311-workbench:latest' #added for good practice
