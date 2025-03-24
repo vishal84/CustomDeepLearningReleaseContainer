@@ -39,12 +39,6 @@ variable "notebook_name" {
   default     = "Build_Your_Own_Small_Language_Model"
 }
 
-variable "notebook_version" {
-  type        = string
-  description = "Semantic version of the notebook (e.g., '1.0.0')"
-  default     = "v2.0.0"
-}
-
 variable "requirements_file_path" {
   type        = string
   description = "Path to the requirements file"
