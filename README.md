@@ -6,14 +6,25 @@ Using guidance provided in the [Create an instance using a custom container](htt
 
 ## Dockerfile
 
-The `Dockerfile` referenced in this repository provides an example of how to customize the runtime environment to suite your needs from an existing prebuilt container image. 
+The `Dockerfile` referenced in this repository provides an example of how to customize the runtime environment to suite your needs from an existing prebuilt container image. The sections below provide a breakdown of how to setup the container for your needs.
+
+### Extend base image
+```
+FROM us-docker.pkg.dev/deeplearning-platform-release/gcr.io/workbench-container:latest
+```
+
+This custom container uses the `workbench-container:latest` prebuilt container as its base image.
+
+### Install OS packages
 
 ```
-# DockerFile
-FROM us-docker.pkg.dev/deeplearning-platform-release/gcr.io/workbench-container:latest
-
 RUN apt-get update && apt-get install -y gsutil
+```
 
+This steps installs any packages required by startup scripts to the OS if not present.
+
+
+```
 ENV MAMBA_ROOT_PREFIX=/opt/micromamba
 RUN micromamba create -n python311 -c conda-forge python=3.11 -y
 SHELL ["micromamba", "run", "-n", "python311", "/bin/bash", "-c"]
@@ -27,6 +38,8 @@ RUN pip install transformers==4.49.0
 RUN pip install torch torchaudio torchvision
 RUN pip install tensorflow==2.18.0
 RUN pip install jax[cuda12]==0.5.2
+```
+
 
 RUN python -m ipykernel install --prefix "/opt/micromamba/envs/python311" --name python311 --display-name "python311"
 RUN rm -rf "/opt/micromamba/envs/python311/share/jupyter/kernels/python3"
