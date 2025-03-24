@@ -57,4 +57,16 @@ variable "accelerator_type" {
   default     = "NVIDIA_TESLA_T4"
 }
 
+variable "identity_services" {
+  type = list(string)
+  default = [
+    "aiplatform.googleapis.com",
+  ]
+}
 
+# with the same name for any lab that uses this script.
+variable "identity_create_duration" {
+  type        = string
+  description = "Duration delay to apply post API enablement"
+  default     = "60s"
+}
