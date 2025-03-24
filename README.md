@@ -55,3 +55,14 @@ The last requirement is for the `/run_jupyter.sh` script to run in order to scaf
 # Override the existing CMD directive from the base container.
 CMD ["/run_jupyter.sh"]
 ```
+
+## Cloud Build job execution
+
+To build the container to use with your workbench instance, run a cloud build job using the `cloudbuild.yaml` provided as an example. Note that we will be pushing the built container to [Artifact Registry](https://cloud.google.com/artifact-registry/docs/docker/pushing-and-pulling) to reference in the terraform script used to provision the workbench instance. You will need to grant the GCP account with access to Artifact Registry the `roles/artifactRegistry.reader` role so it can pull the image when terraform attempts to provision the Vertex AI workbench instance.
+
+To run the Cloud Build job:
+```
+gcloud builds submit --config cloudbuild.yaml --project $DEVSHELL_PROJECT_ID
+```
+
+This will submit a Cloud Build job using the cloudbuild.yaml file found in this repo. The build job builds the container using the base image referenced and pushes the resulting container to Artifact Registry of the project you submit the build job from.
