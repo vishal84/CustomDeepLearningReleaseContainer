@@ -52,6 +52,6 @@ RUN rm -rf "/opt/micromamba/envs/python311/share/jupyter/kernels/python3"
 The last requirement is for the `/run_jupyter.sh` script to run in order to scaffold the Jupyter Lab environment upon startup.
 
 ```
-/# Override the existing CMD directive from the base container.
+# Override the existing CMD directive from the base container.
 CMD ["/run_jupyter.sh"]
 ```
