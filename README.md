@@ -62,7 +62,8 @@ To build the container to use with your workbench instance, run a cloud build jo
 
 To run the Cloud Build job:
 ```
-gcloud builds submit --config cloudbuild.yaml --project $DEVSHELL_PROJECT_ID
+export PROJECT_ID = $(gcloud config get-value project)
+gcloud builds submit --config cloudbuild.yaml --substitutions _PROJECT_ID="$PROJECT_ID" --project $PROJECT_ID
 ```
 
 This will submit a Cloud Build job using the cloudbuild.yaml file found in this repo. The build job builds the container using the base image referenced and pushes the resulting container to Artifact Registry of the project you submit the build job from.

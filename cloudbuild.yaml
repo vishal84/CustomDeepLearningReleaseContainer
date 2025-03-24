@@ -4,14 +4,14 @@ steps:
     args: [
         'build',
         '-t',
-        'gcr.io/$GCP_PROJECT_ID/workbench-custom:latest', 
+        'gcr.io/$$PROJECT_ID/workbench-custom:latest', 
         '.'  # Build context is the current directory.
     ]
   # Push the Docker image to Artifact Registry.
   - name: 'gcr.io/cloud-builders/docker'
     args: [
         'push',
-        'gcr.io/$GCP_PROJECT_ID/workbench-custom:latest'
+        'gcr.io/$$PROJECT_ID/workbench-custom:latest'
     ]
 images:
-  - 'gcr.io/$GCP_PROJECT_ID/workbench-custom:latest' #added for good practice
+  - 'gcr.io/$$PROJECT_ID/workbench-custom:latest' #added for good practice
