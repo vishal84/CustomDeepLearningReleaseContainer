@@ -67,3 +67,36 @@ gcloud builds submit --config cloudbuild.yaml --project $PROJECT_ID
 ```
 
 This will submit a Cloud Build job using the cloudbuild.yaml file found in this repo. The build job builds the container using the base image referenced and pushes the resulting container to Artifact Registry of the project you submit the build job from.
+
+### Share the Container Image with Service Account(s)
+
+To ensure you can pull the container image when provisioning infrastructure, ensure that the __Artifact Registry__ repository grants the role `role/artifactRegistery.reader` to the IAM member (user, group, domain, service account, etc.) that will use the image when scaffolding a Vertex AI workbench instance.
+
+## Deploy infrastructure using Terraform
+
+To deploy the infrastructure required to access the custom container, clone the terraform folder to __Cloud Shell__ or jump host and apply the terraform to provision the infrastructure required.
+
+```
+git clone https://github.com/vishal84/CustomDeepLearningReleaseContainer.git
+```
+
+To apply the Terraform, switch to the terraform directory:
+```
+cd CustomDeepLearningReleaseContainer/terraform
+```
+
+Then run terraform apply to deploy the infrastructure. Notice that the 
+```
+terraform init
+terraform plan
+terraform apply
+```
+
+## Access the Instance
+
+Once the infrastructure deploys you can access the Vertex AI workbench instance in Cloud Console.
+
+Navigate to __Vertex AI__ > __Workbench__. 
+
+You will see an instance called `custom-container-instance` provisioned by terraform in the prior step. Click on __Open Jupyterlab__ button to access the instance.
+

@@ -58,3 +58,55 @@ resource "google_storage_bucket_object" "post_startup_script" {
     google_storage_bucket_object.notebook_file
   ]
 }
+
+resource "google_workbench_instance" "custom_container_instance" {
+  name     = "custom-container-instance"
+  location = var.gcp_zone
+
+  gce_setup {
+    machine_type = "n1-standard-4" // cant be e2 because of accelerator
+
+    shielded_instance_config {
+      enable_secure_boot          = true
+      enable_vtpm                 = true
+      enable_integrity_monitoring = true
+    }
+
+    accelerator_configs {
+      type       = "NVIDIA_TESLA_T4"
+      core_count = 1
+    }
+
+    container_image {
+      repository = "gcr.io/${var.gcp_project_id}/workbench-custom"
+      tag        = "latest"
+    }
+
+    boot_disk {
+      disk_size_gb = 200
+      disk_type    = "PD_SSD"
+    }
+
+    data_disks {
+      disk_size_gb = 200
+      disk_type    = "PD_SSD"
+    }
+
+    enable_ip_forwarding = true
+    metadata = {
+      post-startup-script          = "gs://${module.lab_config_bucket.gcs_bucket_name}/post_startup_script.sh"
+      post-startup-script-behavior = "run_every_start"
+    }
+  }
+
+  disable_proxy_access = false
+  desired_state        = "ACTIVE"
+
+  depends_on = [module.la_api_batch, google_storage_bucket_object.notebook_config_script]
+
+  timeouts {
+    create = "60m"
+    update = "30m"
+    delete = "30m"
+  }
+}
