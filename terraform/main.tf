@@ -102,7 +102,11 @@ resource "google_workbench_instance" "custom_container_instance" {
   disable_proxy_access = false
   desired_state        = "ACTIVE"
 
-  depends_on = [module.la_api_batch, google_storage_bucket_object.notebook_config_script]
+  depends_on = [
+    google_project_service.tlf,
+    google_storage_bucket_object.notebook_file,
+    google_storage_bucket_object.post_startup_script
+  ]
 
   timeouts {
     create = "60m"
