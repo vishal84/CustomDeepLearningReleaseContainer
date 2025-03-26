@@ -98,5 +98,11 @@ Once the infrastructure deploys you can access the Vertex AI workbench instance 
 
 Navigate to __Vertex AI__ > __Workbench__. 
 
-You will see an instance called `custom-container-instance` provisioned by terraform in the prior step. Click on __Open Jupyterlab__ button to access the instance.
+You will see an instance called `custom-container-instance` provisioned by terraform in the prior step. Click on __Open JupyterLab__ button to access the instance.
+
+![Open JupyterLab](img/open_jupyterlab.png)
+
+Load a notebook of your choice and ensure you can select the custom python kernell installed into the environment. In this case, `Python 3.11` was installed with `pytorch 2.6` and required cuda libraries for working with GPU resources.
+
+![python311 Kernel](img/python311_kernel.png)
 
