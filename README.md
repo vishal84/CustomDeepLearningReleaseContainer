@@ -1,4 +1,4 @@
-# CustomDeepLearningReleaseContainer
+# Build a Custom Container with Jupyterlab
 
 Recently, I needed to customize the runtime environment of a Vertex AI Workbench instance to support Python 3.11. Google Cloud provides [prebuilt containers for custom training](https://cloud.google.com/vertex-ai/docs/training/pre-built-containers) which can be used to extend functionality by installing additional packages you might need to customize the environment.
 
